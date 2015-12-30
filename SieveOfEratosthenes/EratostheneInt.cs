@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace sieve_of_eratosthenes
+namespace SieveOfEratosthenes
 {
 	public class EratostheneInt : IEratosthene
 	{
-		public override void doErat (int n) {
+		public override void Sieve (int n) {
 			for (int i = 2; i <= n; i++) {
 				simple.Add (i);
 			}

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace sieve_of_eratosthenes
+namespace SieveOfEratosthenes
 {
 	public class EratostheneBool : IEratosthene
 	{
-		public override void doErat(int n) {
+		public override void Sieve(int n) {
 			var simpleBool = new List<bool>();
 			for (int i = 0; i < n; i++) {
 				simpleBool.Add (true);

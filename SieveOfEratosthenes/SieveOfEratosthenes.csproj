@@ -35,6 +35,9 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EratostheneBool.cs" />
+    <Compile Include="EratostheneInt.cs" />
+    <Compile Include="IEratosthene.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

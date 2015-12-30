@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace sieve_of_eratosthenes
+namespace SieveOfEratosthenes
 {
 	public abstract class IEratosthene
 	{
 		protected List<int> simple = new List<int> ();
 
-		public abstract void doErat(int n);
+		public abstract void Sieve(int n);
 
-		public void showResult() {
+		public void ShowResult() {
 			simple.ForEach((e) => Console.Write (e + " "));
 		}
 
-		public List<int> getResult() {
+		public List<int> GetResult() {
 			return simple;
 		}
 	}
