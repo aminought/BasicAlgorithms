@@ -7,12 +7,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KMeans", "KMeans\KMeans.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EightQueensPuzzle", "EightQueensPuzzle\EightQueensPuzzle.csproj", "{7441D0D9-8A49-45F7-8831-0F3D6893B5C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bogosort", "Bogosort\Bogosort.csproj", "{3AD24761-0792-4F19-B5FC-49678EE1594D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3AD24761-0792-4F19-B5FC-49678EE1594D}.Debug|x86.ActiveCfg = Debug|x86
+		{3AD24761-0792-4F19-B5FC-49678EE1594D}.Debug|x86.Build.0 = Debug|x86
+		{3AD24761-0792-4F19-B5FC-49678EE1594D}.Release|x86.ActiveCfg = Release|x86
+		{3AD24761-0792-4F19-B5FC-49678EE1594D}.Release|x86.Build.0 = Release|x86
 		{7441D0D9-8A49-45F7-8831-0F3D6893B5C4}.Debug|x86.ActiveCfg = Debug|x86
 		{7441D0D9-8A49-45F7-8831-0F3D6893B5C4}.Debug|x86.Build.0 = Debug|x86
 		{7441D0D9-8A49-45F7-8831-0F3D6893B5C4}.Release|x86.ActiveCfg = Release|x86
