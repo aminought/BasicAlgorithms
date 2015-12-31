@@ -11,10 +11,10 @@ namespace KMeans
 
 		public static int Main (string[] args)
 		{
-			const int width = 100;
-			const int height = 100;
+			const int width = 50;
+			const int height = 50;
 			const int count_of_points = width * height;
-			const int count_of_clusters = 50;
+			const int count_of_clusters = 10;
 
 			var kmeans = new KMeans ();
 			kmeans.process (width, height, count_of_points, count_of_clusters);
