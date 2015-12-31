@@ -55,7 +55,7 @@ namespace KMeans
 			} while(isContinue);
 		}
 
-		static List<Tuple<int, int>> CreateTableForUniquePoints (int width, int height)
+		private List<Tuple<int, int>> CreateTableForUniquePoints (int width, int height)
 		{
 			List<Tuple<int, int>> table = new List<Tuple<int, int>> ();
 			for (int i = 0; i < width; ++i) {
@@ -66,7 +66,7 @@ namespace KMeans
 			return table;
 		}
 
-		void GenerateRandomPoints (int count_of_points, List<Tuple<int, int>> table)
+		private void GenerateRandomPoints (int count_of_points, List<Tuple<int, int>> table)
 		{
 			var rand = new Random ();
 			for (int i = 0; i < count_of_points; ++i) {
@@ -77,7 +77,7 @@ namespace KMeans
 			}
 		}
 
-		void GenerateRandomClusters (int count_of_clusters, List<Point> old_mean_points)
+		private void GenerateRandomClusters (int count_of_clusters, List<Point> old_mean_points)
 		{
 			var rand = new Random ();
 			for (int i = 0; i < count_of_clusters; ++i) {
@@ -90,7 +90,7 @@ namespace KMeans
 			}
 		}
 
-		void SplitPointsIntoClusters ()
+		private void SplitPointsIntoClusters ()
 		{
 			Points.ForEach (p => {
 				var distances = new SortedDictionary<double, Point> ();
@@ -108,7 +108,7 @@ namespace KMeans
 			});
 		}
 
-		void ComputeNewMeanPoints (List<Point> new_mean_points)
+		private void ComputeNewMeanPoints (List<Point> new_mean_points)
 		{
 			Clusters.ForEach (c => {
 				int sumX = 0;

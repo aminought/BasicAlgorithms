@@ -23,7 +23,7 @@ namespace KMeans
 			}
 		}
 
-		public static ConsoleColor ChooseColor (int n)
+		private static ConsoleColor ChooseColor (int n)
 		{
 			Array colors = Enum.GetValues (typeof(ConsoleColor));
 			return (ConsoleColor)colors.GetValue (n % (colors.Length - 1) + 1);
