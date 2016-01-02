@@ -10,7 +10,7 @@ namespace Bogosort
 		{
 			var bogosort = new Bogosort ();
 			var rand = new Random ();
-			var elements = Enumerable.Range (0, 10).OrderBy (e => rand.Next ()).ToList<int> ();
+			var elements = Enumerable.Range (0, 20).OrderBy (e => rand.Next ()).ToList<int> ();
 			elements.ForEach (e => Console.Write (e + " "));
 			elements = bogosort.Sort (elements);
 			Console.WriteLine ();
