@@ -10,7 +10,7 @@ namespace NeuroNetwork
 	{
 		public static void Main (string[] args)
 		{
-			var pictureChooser = new PictureChooser (@"..\..\..\digits\");
+			var pictureChooser = new PictureChooser (@"..\..\digits\");
 			var pictures = pictureChooser.Pictures;
 			var names = new List<string> { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 			var neuroNetwork = new NeuroNetwork (names, 30, 50);
@@ -28,18 +28,18 @@ namespace NeuroNetwork
 				int[,] input = picture.ToInput ();
 				var neuroProb = neuroNetwork.Recognize (input);
 
-				if (i < 2000) { // Auto learning
+				if (i < 200) { // Auto learning
 					bool isTrue = name.Equals (neuroProb.Key.Name);
-					neuroProb.Key.Solution (isTrue, input);
+					neuroProb.Key.Learn (isTrue, input);
 				} else { // Manual learning
 					ShowInput (input);
 					Console.WriteLine ("Probably, it is " + neuroProb.Key.Name);
 					Console.WriteLine ("Is it true?");
 					var key = Console.ReadKey ();
 					if (key.Key == ConsoleKey.UpArrow) {
-						neuroProb.Key.Solution (true, input);
+						neuroProb.Key.Learn (true, input);
 					} else if (key.Key == ConsoleKey.DownArrow) {
-						neuroProb.Key.Solution (false, input); 
+						neuroProb.Key.Learn (false, input); 
 					}
 				}
 			}

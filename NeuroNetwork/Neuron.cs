@@ -30,19 +30,15 @@ namespace NeuroNetwork
 			var fileStream = new FileStream (Name, FileMode.OpenOrCreate);
 			if (fileStream.Length != 0) {
 				using (var br = new BinaryReader (fileStream)) {
-					for (int i = 0; i < Height; ++i) {
-						for (int j = 0; j < Width; ++j) {
-							Weight [i, j] = br.ReadInt32 ();
-						}
-					}
+					Loop ((i, j) => {
+						Weight [i, j] = br.ReadInt32 ();
+					});
 				}
 			} else {
 				using (var bw = new BinaryWriter (fileStream)) {
-					for (int i = 0; i < Height; ++i) {
-						for (int j = 0; j < Width; ++j) {
-							bw.Write (0);
-						}
-					}
+					Loop ((i, j) => {
+						bw.Write (0);
+					});
 				}
 			}
 			fileStream.Close ();
@@ -51,29 +47,33 @@ namespace NeuroNetwork
 		public int Recognize (int[,] input)
 		{
 			int probability = 0;
-			for (int i = 0; i < Height; ++i) {
-				for (int j = 0; j < Width; ++j) {
-					Scale [i, j] = input [i, j] * Weight [i, j];
-					probability += Scale [i, j];
-				}
-			}
-
+			Loop ((i, j) => {
+				Scale [i, j] = input [i, j] * Weight [i, j];
+				probability += Scale [i, j];
+			});
 			return probability;
 		}
 
-		public void Solution (bool isTrue, int[,] input)
+		public void Learn (bool isTrue, int[,] input)
 		{
 			var fileStream = new FileStream (Name, FileMode.Open);
 			fileStream.SetLength (0);
 			using (var br = new BinaryWriter (fileStream)) {
-				for (int i = 0; i < Height; ++i) {
-					for (int j = 0; j < Width; ++j) {
-						Weight [i, j] += (isTrue ? 1 : (-1)) * input [i, j];
-						br.Write (Weight [i, j]);
-					}
-				}
+				Loop ((i, j) => {
+					Weight [i, j] += (isTrue ? 1 : (-1)) * input [i, j];
+					br.Write (Weight [i, j]);				
+				});
 			}
 			fileStream.Close ();
+		}
+
+		private void Loop (Action<int, int> lambda)
+		{
+			for (int i = 0; i < Height; ++i) {
+				for (int j = 0; j < Width; ++j) {
+					lambda (i, j);
+				}
+			}
 		}
 
 	}
