@@ -49,7 +49,7 @@ namespace NeuroNetwork
 		{
 			for (int i = 0; i < input.GetLength (0); i += 2) {
 				for (int j = 0; j < input.GetLength (1); j += 2) {
-					Console.Write (input [i, j]);
+					Console.Write (input [i, j] == 1 ? "1" : " ");
 				}
 				Console.WriteLine ();
 			}
