@@ -5,20 +5,21 @@ namespace SieveOfEratosthenes
 {
 	public class EratostheneBool : IEratosthene
 	{
-		public override void Sieve(int n) {
-			var simpleBool = new List<bool>();
+		public override void Sieve (int n)
+		{
+			var simpleBool = new List<bool> ();
 			for (int i = 0; i < n; i++) {
 				simpleBool.Add (true);
 			}
-			int current_index = 2;
-			while(current_index < simpleBool.Count) {
-				int p = current_index;
-				if (simpleBool[p] == true) {
-					for (int j = 2*p; j < simpleBool.Count; j += p) {
+			int currentIndex = 2;
+			while (currentIndex < simpleBool.Count) {
+				int p = currentIndex;
+				if (simpleBool [p] == true) {
+					for (int j = 2 * p; j < simpleBool.Count; j += p) {
 						simpleBool [j] = false;
 					}
 				}
-				current_index++;
+				currentIndex++;
 			}
 			for (int i = 2; i < simpleBool.Count; i++) {
 				if (simpleBool [i] == true) {

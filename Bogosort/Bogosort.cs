@@ -8,12 +8,12 @@ namespace Bogosort
 	{
 		public List<int> Sort (List<int> elements)
 		{
-			var sorted_list = new List<int> (elements);
+			var sortedList = new List<int> (elements);
 			var rand = new Random ();	
-			while (!check (sorted_list)) {
-				sorted_list = sorted_list.OrderBy (e => rand.Next ()).ToList<int> ();
+			while (!check (sortedList)) {
+				sortedList = sortedList.OrderBy (e => rand.Next ()).ToList<int> ();
 			}
-			return sorted_list;
+			return sortedList;
 		}
 
 		private bool check (List<int> elements)

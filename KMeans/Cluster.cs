@@ -11,11 +11,11 @@ namespace KMeans
 
 		public int Id { get; set; }
 
-		public Cluster (int id, Point random_mean_point)
+		public Cluster (int id, Point randomMeanPoint)
 		{
 			Points = new List<Point> ();
 			Id = id;
-			MeanPoint = random_mean_point;
+			MeanPoint = randomMeanPoint;
 		}
 	}
 }

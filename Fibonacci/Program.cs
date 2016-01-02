@@ -6,10 +6,10 @@ namespace Fibonacci
 	{
 		public static void Main (string[] args)
 		{
-			var fibonacci_loop = new FibonacciLoop ();
-			var fibonacci_math = new FibonacciMath ();
-			Console.WriteLine (fibonacci_math.Process (1000));
-			Console.WriteLine (fibonacci_loop.Process (1000));
+			var fibonacciLoop = new FibonacciLoop ();
+			var fibonacciMath = new FibonacciMath ();
+			Console.WriteLine (fibonacciMath.Process (1000));
+			Console.WriteLine (fibonacciLoop.Process (1000));
 		}
 	}
 }

@@ -14,11 +14,7 @@ namespace EightQueensPuzzle
 				Saved.ForEach ((Solution) => {
 					for (int i = 0; i < size; ++i) {
 						for (int j = 0; j < size; ++j) {
-							if (Solution.Contains (new Tuple<int, int> (i, j))) {
-								Console.Write ("1 ");
-							} else {
-								Console.Write ("* ");
-							}
+							Console.Write (Solution.Contains (new Tuple<int, int> (i, j)) ? "1 " : "* ");
 						}
 						Console.WriteLine ();
 					}

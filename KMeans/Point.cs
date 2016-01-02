@@ -10,10 +10,10 @@ namespace KMeans
 
 		public Cluster Cluster { get; set; }
 
-		public Point (int rand_x, int rand_y)
+		public Point (int x, int y)
 		{
-			X = rand_x;
-			Y = rand_y;
+			X = x;
+			Y = y;
 		}
 
 		public double Distance (Point p)

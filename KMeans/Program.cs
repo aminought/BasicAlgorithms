@@ -13,11 +13,11 @@ namespace KMeans
 		{
 			const int width = 50;
 			const int height = 50;
-			const int count_of_points = width * height;
-			const int count_of_clusters = 10;
+			const int countOfPoints = width * height;
+			const int countOfClusters = 10;
 
 			var kmeans = new KMeans ();
-			kmeans.process (width, height, count_of_points, count_of_clusters);
+			kmeans.process (width, height, countOfPoints, countOfClusters);
 			Visualizer.Visualize (width, height, kmeans.Points);
 				
 			return 0;
@@ -29,28 +29,28 @@ namespace KMeans
 			Clusters = new List<Cluster> ();
 		}
 
-		public void process (int width, int height, int count_of_points, int count_of_clusters)
+		public void process (int width, int height, int countOfPoints, int countOfClusters)
 		{
 			var table = CreateTableForUniquePoints (width, height);
-			GenerateRandomPoints (count_of_points, table);
-			var old_mean_points = new List<Point> ();
-			GenerateRandomClusters (count_of_clusters, old_mean_points);
+			GenerateRandomPoints (countOfPoints, table);
+			var oldMeanPoints = new List<Point> ();
+			GenerateRandomClusters (countOfClusters, oldMeanPoints);
 
 			bool isContinue = true;
 			do {
 				SplitPointsIntoClusters ();
-				var new_mean_points = new List<Point> ();
-				ComputeNewMeanPoints (new_mean_points);
+				var newMeanPoints = new List<Point> ();
+				ComputeNewMeanPoints (newMeanPoints);
 
 				for (int i = 0; i < Clusters.Count; ++i) {
-					if (!old_mean_points [i].Equals (new_mean_points [i])) {
+					if (!oldMeanPoints [i].Equals (newMeanPoints [i])) {
 						break;
 					} else {
 						isContinue = false;
 					}
 				} 
 				if (isContinue == true) {
-					old_mean_points = new_mean_points;
+					oldMeanPoints = newMeanPoints;
 				}
 			} while(isContinue);
 		}
@@ -66,27 +66,27 @@ namespace KMeans
 			return table;
 		}
 
-		private void GenerateRandomPoints (int count_of_points, List<Tuple<int, int>> table)
+		private void GenerateRandomPoints (int countOfPoints, List<Tuple<int, int>> table)
 		{
 			var rand = new Random ();
-			for (int i = 0; i < count_of_points; ++i) {
-				Tuple<int, int> rand_tuple = table [rand.Next (table.Count)];
-				var point = new Point (rand_tuple.Item1, rand_tuple.Item2);
-				table.Remove (rand_tuple);
+			for (int i = 0; i < countOfPoints; ++i) {
+				Tuple<int, int> randTuple = table [rand.Next (table.Count)];
+				var point = new Point (randTuple.Item1, randTuple.Item2);
+				table.Remove (randTuple);
 				Points.Add (point);
 			}
 		}
 
-		private void GenerateRandomClusters (int count_of_clusters, List<Point> old_mean_points)
+		private void GenerateRandomClusters (int countOfClusters, List<Point> oldMeanPoints)
 		{
 			var rand = new Random ();
-			for (int i = 0; i < count_of_clusters; ++i) {
-				var random_mean_point = Points [rand.Next (Points.Count)];
-				Cluster cluster = new Cluster (i, random_mean_point);
-				cluster.Points.Add (random_mean_point);
-				random_mean_point.Cluster = cluster;
+			for (int i = 0; i < countOfClusters; ++i) {
+				var randomMeanPoint = Points [rand.Next (Points.Count)];
+				Cluster cluster = new Cluster (i, randomMeanPoint);
+				cluster.Points.Add (randomMeanPoint);
+				randomMeanPoint.Cluster = cluster;
 				Clusters.Add (cluster);
-				old_mean_points.Add (random_mean_point);
+				oldMeanPoints.Add (randomMeanPoint);
 			}
 		}
 
@@ -108,7 +108,7 @@ namespace KMeans
 			});
 		}
 
-		private void ComputeNewMeanPoints (List<Point> new_mean_points)
+		private void ComputeNewMeanPoints (List<Point> newMeanPoints)
 		{
 			Clusters.ForEach (c => {
 				int sumX = 0;
@@ -128,9 +128,9 @@ namespace KMeans
 				});
 				SortedDictionary<double, Point>.ValueCollection.Enumerator enumerator = distances.Values.GetEnumerator ();
 				enumerator.MoveNext ();
-				Point new_mean_point = enumerator.Current;
-				c.MeanPoint = new_mean_point;
-				new_mean_points.Add (new_mean_point);
+				Point newMeanPoint = enumerator.Current;
+				c.MeanPoint = newMeanPoint;
+				newMeanPoints.Add (newMeanPoint);
 			});
 		}
 	}
