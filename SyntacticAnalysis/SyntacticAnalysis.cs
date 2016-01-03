@@ -10,6 +10,12 @@ namespace SyntacticAnalysis
 			var syntaxTree = new SyntaxTree ();
 			var lexicalAnalysis = new LexicalAnalysis ();
 			var tokens = lexicalAnalysis.Analize (expression);
+			for (int i = 0; i < tokens.Count; ++i) {
+				var token = tokens [i];
+				if (token.TypeOfToken == TypeOfToken.Operand) {
+					
+				}
+			}
 			return syntaxTree;
 		}
 	}

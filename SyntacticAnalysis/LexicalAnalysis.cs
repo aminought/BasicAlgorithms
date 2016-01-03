@@ -5,8 +5,12 @@ namespace SyntacticAnalysis
 {
 	public enum TypeOfToken
 	{
-		Operator,
-		Operand
+		Operand,
+		UnaryLeftOperator,
+		UnaryRightOperator,
+		BinaryOperator,
+		LeftBracket,
+		RightBracker
 	}
 
 	public class Token
@@ -30,13 +34,13 @@ namespace SyntacticAnalysis
 					if (Char.IsDigit (currentChar) || currentChar == '.' || currentChar == ',') {
 						token.TypeOfToken = TypeOfToken.Operand;
 					} else {
-						token.TypeOfToken = TypeOfToken.Operator;
+						token.TypeOfToken = TypeOfToken.UnaryLeftOperator;
 					}
 
 					int j = i;
 					while (j++ < expression.Length) {
 						char nextChar = expression [j];
-						if (Char.IsDigit (nextChar)) {
+						if (Char.IsLetterOrDigit (nextChar)) {
 							token.Value += Char.ToString (nextChar);
 						} else {
 							i = --j;
@@ -44,7 +48,15 @@ namespace SyntacticAnalysis
 						}
 					}
 				} else { // example: *, /, -
-					token.TypeOfToken = TypeOfToken.Operator;
+					if (currentChar == '!') {
+						token.TypeOfToken = TypeOfToken.UnaryRightOperator;
+					} else if (currentChar == '(') {
+						token.TypeOfToken = TypeOfToken.LeftBracket;
+					} else if (currentChar == ')') {
+						token.TypeOfToken = TypeOfToken.RightBracker;
+					} else {
+						token.TypeOfToken = TypeOfToken.BinaryOperator;
+					}
 				}
 
 				tokens.Add (token);
