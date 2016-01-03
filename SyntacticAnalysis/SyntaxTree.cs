@@ -34,6 +34,10 @@ namespace SyntacticAnalysis
 			Nodes = new List<Node> ();
 		}
 
+		public void AddNode (Node node)
+		{
+			Nodes.Add (node);
+		}
 	}
 }
 
