@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KnightTour", "KnightTour\Kn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuroNetwork", "NeuroNetwork\NeuroNetwork.csproj", "{9FF3973E-C641-4FA7-95F7-2146AB12D140}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyntacticAnalysis", "SyntacticAnalysis\SyntacticAnalysis.csproj", "{6796D942-87ED-4239-956E-77B59FD52CBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -35,6 +37,10 @@ Global
 		{4BBC5322-0FDE-430B-B042-E1CFAFF646FB}.Debug|x86.Build.0 = Debug|x86
 		{4BBC5322-0FDE-430B-B042-E1CFAFF646FB}.Release|x86.ActiveCfg = Release|x86
 		{4BBC5322-0FDE-430B-B042-E1CFAFF646FB}.Release|x86.Build.0 = Release|x86
+		{6796D942-87ED-4239-956E-77B59FD52CBC}.Debug|x86.ActiveCfg = Debug|x86
+		{6796D942-87ED-4239-956E-77B59FD52CBC}.Debug|x86.Build.0 = Debug|x86
+		{6796D942-87ED-4239-956E-77B59FD52CBC}.Release|x86.ActiveCfg = Release|x86
+		{6796D942-87ED-4239-956E-77B59FD52CBC}.Release|x86.Build.0 = Release|x86
 		{7441D0D9-8A49-45F7-8831-0F3D6893B5C4}.Debug|x86.ActiveCfg = Debug|x86
 		{7441D0D9-8A49-45F7-8831-0F3D6893B5C4}.Debug|x86.Build.0 = Debug|x86
 		{7441D0D9-8A49-45F7-8831-0F3D6893B5C4}.Release|x86.ActiveCfg = Release|x86
