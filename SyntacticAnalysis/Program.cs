@@ -7,7 +7,7 @@ namespace SyntacticAnalysis
 		public static void Main (string[] args)
 		{
 			var syntacticAnalysis = new SyntacticAnalysis ();
-			string expression = "4+(2+5)";
+			string expression = "2*3*(9+2)+4*(5+10)";
 			var syntaxTree = syntacticAnalysis.Analyze (expression);
 			Visualiser.Visualize (syntaxTree);
 		}

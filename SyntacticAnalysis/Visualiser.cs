@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using SyntacticAnalysis.LexicalAnalysis;
 
 namespace SyntacticAnalysis
 {
@@ -8,6 +10,11 @@ namespace SyntacticAnalysis
 		{
 			SyntaxTree.HeadNode.PrintPretty ("", true, false);
 		}
+
+		public static void ShowTokens (List<Token> tokens)
+		{
+			tokens.ForEach (t => Console.Write (t.Value + " "));
+		}
 	}
 
 	public static class NodePrintExtension
@@ -16,13 +23,15 @@ namespace SyntacticAnalysis
 		{
 			Console.Write (indent);
 			if (last) {
-				Console.Write ("\\-");
+				Console.Write ("+- ");
 				indent += "  ";
 			} else if (!first) {
-				Console.Write ("|-");
+				Console.Write ("|- ");
 				indent += "| ";
 			}
+			Console.ForegroundColor = ConsoleColor.Green;
 			Console.WriteLine (node.Token.Value);
+			Console.ResetColor ();
 
 			if (node.Operands != null) {
 				for (int i = 0; i < node.Operands.Count; ++i) {
