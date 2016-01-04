@@ -1,42 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using SyntacticAnalysis.LexicalAnalysis;
 
 namespace SyntacticAnalysis
 {
-	public enum TypeOfNode
-	{
-		Operand,
-		Operator
-	}
-
 	public class Node
 	{
-		public string Value { get; set; }
+		public Token Token { get; set; }
 
-		public TypeOfNode TypeOfNode { get; set; }
+		public Node Parent { get; set; }
 
 		public List<Node> Operands { get; set; }
 
-		public Node (TypeOfNode typeOfNode)
+		public Node (Token token)
 		{
-			if (typeOfNode == TypeOfNode.Operator) {
+			Token = token;
+			if (token.TypeOfToken == TypeOfToken.BinaryOperator
+			    || token.TypeOfToken == TypeOfToken.UnaryLeftOperator
+			    || token.TypeOfToken == TypeOfToken.UnaryRightOperator
+			    || token.TypeOfToken == TypeOfToken.Equals) {
 				Operands = new List<Node> ();
 			}
+		}
+
+		public void AddChild (Node child)
+		{
+			child.Parent = this;
+			Operands.Add (child);
+		}
+
+		public void RemoveChild (Node child)
+		{
+			child.Parent = null;
+			Operands.Remove (child);
 		}
 	}
 
 	public class SyntaxTree
 	{
-		public List<Node> Nodes { get; set; }
+		public Node HeadNode { get; set; }
 
 		public SyntaxTree ()
 		{
-			Nodes = new List<Node> ();
-		}
-
-		public void AddNode (Node node)
-		{
-			Nodes.Add (node);
+			HeadNode = new Node (new Token () { TypeOfToken = TypeOfToken.Equals, Value = "=" });
 		}
 	}
 }

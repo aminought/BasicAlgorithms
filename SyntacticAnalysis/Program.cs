@@ -7,9 +7,9 @@ namespace SyntacticAnalysis
 		public static void Main (string[] args)
 		{
 			var syntacticAnalysis = new SyntacticAnalysis ();
-			string expression = "523+cos(4)/3!*8-(234+2*(-2+4))";
-			var syntaxTree = syntacticAnalysis.Analysis (expression);
-			Console.WriteLine ("OK");
+			string expression = "4+(2+5)";
+			var syntaxTree = syntacticAnalysis.Analyze (expression);
+			Visualiser.Visualize (syntaxTree);
 		}
 	}
 }

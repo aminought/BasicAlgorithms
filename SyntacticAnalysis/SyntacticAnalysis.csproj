@@ -38,6 +38,7 @@
     <Compile Include="SyntaxTree.cs" />
     <Compile Include="SyntacticAnalysis.cs" />
     <Compile Include="LexicalAnalysis.cs" />
+    <Compile Include="Visualiser.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
