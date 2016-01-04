@@ -40,13 +40,12 @@ namespace SyntacticAnalysis
 							token.TypeOfToken = TypeOfToken.UnaryLeftOperator;
 						}
 
-						int j = i;
-						while (++j < expression.Length) {
-							char nextChar = expression [j];
+						while (i++ < expression.Length - 1) {
+							char nextChar = expression [i];
 							if (Char.IsLetterOrDigit (nextChar)) {
 								token.Value += Char.ToString (nextChar);
 							} else {
-								i = --j;
+								--i;
 								break;
 							}
 						}

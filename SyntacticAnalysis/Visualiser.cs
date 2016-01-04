@@ -14,6 +14,7 @@ namespace SyntacticAnalysis
 		public static void ShowTokens (List<Token> tokens)
 		{
 			tokens.ForEach (t => Console.Write (t.Value + " "));
+			Console.WriteLine ();
 		}
 	}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SyntacticAnalysis
 {
@@ -7,9 +8,17 @@ namespace SyntacticAnalysis
 		public static void Main (string[] args)
 		{
 			var syntacticAnalysis = new SyntacticAnalysis ();
-			string expression = "2*3*(9+2)+4*(5+10)";
-			var syntaxTree = syntacticAnalysis.Analyze (expression);
-			Visualiser.Visualize (syntaxTree);
+			var expressions = new List<String> {
+				"1+2",
+				"1+2+3",
+				"2*3",
+				"1+2*3",
+				"(1+2)*3"
+			};
+			expressions.ForEach (expression => {
+				var syntaxTree = syntacticAnalysis.Analyze (expression);
+				Visualiser.Visualize (syntaxTree);
+			});
 		}
 	}
 }
