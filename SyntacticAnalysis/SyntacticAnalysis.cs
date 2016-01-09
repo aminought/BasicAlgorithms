@@ -13,7 +13,6 @@ namespace SyntacticAnalysis
 			var lexicalAnalysis = new LexicalAnalysis.LexicalAnalysis ();
 			var tokens = lexicalAnalysis.Analyze (expression);
 			tokens = PreProcess (tokens);
-			Visualiser.ShowTokens (tokens);
 			Process (tokens, syntaxTree.HeadNode);
 			return syntaxTree;
 		}
@@ -24,7 +23,8 @@ namespace SyntacticAnalysis
 			for (int i = 0; i < tokens.Count; ++i) {
 				var token = tokens [i];
 				newTokens.Add (token);
-				if (token.Value == "*" || token.Value == "/") {
+				if (token.Value == "*" || token.Value == "/" || token.TypeOfToken == TypeOfToken.UnaryRightOperator
+				    || token.Value == "+" || token.Value == "-") {
 					int j = newTokens.Count - 2;
 					var stack = new Stack<string> ();
 					while (j >= 0) { // add left bracket
@@ -43,6 +43,11 @@ namespace SyntacticAnalysis
 						}
 						j--;
 					}
+					token = tokens [i];
+					if (token.TypeOfToken == TypeOfToken.UnaryRightOperator) {
+						newTokens.Add (new Token () { TypeOfToken = TypeOfToken.RightBracket, Value = ")" });
+						continue;
+					}
 					i++;
 					while (i < tokens.Count) { // add right bracket
 						token = tokens [i];
@@ -52,7 +57,7 @@ namespace SyntacticAnalysis
 						} else if (token.Value.Equals (")")) {
 							stack.Pop ();
 						} 
-						if (stack.Count == 0) {
+						if (stack.Count == 0 && token.TypeOfToken != TypeOfToken.UnaryLeftOperator) {
 							newTokens.Add (new Token () { TypeOfToken = TypeOfToken.RightBracket, Value = ")" });
 							break;
 						}
@@ -73,7 +78,7 @@ namespace SyntacticAnalysis
 			}
 
 			var firstToken = tokens [countOfTokensProcessed++];
-			Node firstNode = GetNode (tokens, parent, ref countOfTokensProcessed, firstToken);
+			Node firstNode = GetNode (tokens, parent, ref countOfTokensProcessed, countOfTokensProcessed - 1);
 
 			if (countOfTokensProcessed < tokens.Count) {
 				var secondToken = tokens [countOfTokensProcessed++];
@@ -81,47 +86,46 @@ namespace SyntacticAnalysis
 				Node thirdNode = null;
 
 				if (firstNode.Token.TypeOfToken == TypeOfToken.Operand) {
-					secondNode = GetNode (tokens, firstNode, ref countOfTokensProcessed, secondToken);
+					secondNode = GetNode (tokens, firstNode, ref countOfTokensProcessed, countOfTokensProcessed - 1);
 					secondNode.AddChild (firstNode);
 				} else if (firstNode.Token.TypeOfToken == TypeOfToken.UnaryLeftOperator) {
-					secondNode = GetNode (tokens, firstNode, ref countOfTokensProcessed, secondToken);
-					firstNode.AddChild (secondNode);
-					parent.AddChild (firstNode);
+					secondNode = GetNode (tokens, firstNode, ref countOfTokensProcessed, countOfTokensProcessed - 1);
+					secondNode.AddChild (firstNode);
+					parent.AddChild (secondNode);
+				} else if (firstNode.Token.TypeOfToken == TypeOfToken.UnaryRightOperator) {
+					secondNode = GetNode (tokens, parent, ref countOfTokensProcessed, countOfTokensProcessed - 1);
+					secondNode.AddChild (firstNode);
+					parent.RemoveLastChild ();
+					parent.AddChild (secondNode);
 				} else if (firstNode.Token.TypeOfToken == TypeOfToken.BinaryOperator) {
-					secondNode = GetNode (tokens, parent, ref countOfTokensProcessed, secondToken);
+					secondNode = GetNode (tokens, parent, ref countOfTokensProcessed, countOfTokensProcessed - 1);
 					secondNode.AddChild (firstNode);
 					parent.RemoveLastChild ();
 					parent.AddChild (secondNode);
 				}
 
 				if (secondNode.Token.TypeOfToken == TypeOfToken.UnaryRightOperator) {
-					secondNode = GetNode (tokens, firstNode, ref countOfTokensProcessed, secondToken);
-					secondNode.AddChild (firstNode);
 					parent.AddChild (secondNode);
 				} else if (secondNode.Token.TypeOfToken == TypeOfToken.BinaryOperator) {
 					var thirdToken = tokens [countOfTokensProcessed++];
-					thirdNode = GetNode (tokens, secondNode, ref countOfTokensProcessed, thirdToken);
+					thirdNode = GetNode (tokens, secondNode, ref countOfTokensProcessed, countOfTokensProcessed - 1);
 					secondNode.AddChild (thirdNode);
 					parent.AddChild (secondNode);
 				}
-
-				if (countOfTokensProcessed < tokens.Count) {
-					secondNode.RemoveChild (secondNode.Operands [1]);
-					var partOfTokens = tokens.SkipWhile (t => t != thirdNode.Token).ToList ();
-					countOfTokensProcessed += Process (partOfTokens, secondNode);
-				}
+			} else {
+				parent.AddChild (firstNode);
 			}
 
 			return countOfTokensProcessed;
 		}
 
-		Node GetNode (List<Token> tokens, Node parent, ref int countOfTokensProcessed, Token firstToken)
+		Node GetNode (List<Token> tokens, Node parent, ref int countOfTokensProcessed, int startOfProcess)
 		{
-			Node firstNode;
-			if (firstToken.Value.Equals ("(")) {
+			Node node;
+			if (tokens [startOfProcess].Value.Equals ("(")) {
 				var stack = new Stack<Token> ();
 				int i;
-				for (i = countOfTokensProcessed - 1; i < tokens.Count; ++i) {
+				for (i = startOfProcess; i < tokens.Count; ++i) {
 					if (tokens [i].Value.Equals ("(")) {
 						stack.Push (tokens [i]);
 					} else if (tokens [i].Value.Equals (")")) {
@@ -131,17 +135,24 @@ namespace SyntacticAnalysis
 						}
 					}
 				}
-				int cop = countOfTokensProcessed;
+				int cop = startOfProcess + 1;
 				var partOfTokens = tokens
 					.SkipWhile (t => t != tokens [cop])
 					.TakeWhile (t => t != tokens [i])
 					.ToList ();
 				countOfTokensProcessed += Process (partOfTokens, parent) + 1;
-				firstNode = parent.Operands.Where (n => n.Token.TypeOfToken != TypeOfToken.Operand).First ();
+				node = parent.Operands.Where (n => n.Token.TypeOfToken != TypeOfToken.Operand).FirstOrDefault ();
+				if (node == null) {
+					node = parent.Operands [0];
+				}
 			} else {
-				firstNode = new Node (firstToken);
+				node = new Node (tokens [startOfProcess]);
+				if (node.Token.TypeOfToken == TypeOfToken.UnaryLeftOperator) {
+					node.AddChild (GetNode (tokens, node, ref countOfTokensProcessed, startOfProcess + 1));
+					countOfTokensProcessed += 1;
+				}
 			}
-			return firstNode;
+			return node;
 		}
 	}
 }
