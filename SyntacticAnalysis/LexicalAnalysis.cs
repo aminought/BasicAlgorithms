@@ -12,7 +12,7 @@ namespace SyntacticAnalysis
 			UnaryRightOperator,
 			BinaryOperator,
 			LeftBracket,
-			RightBracker,
+			RightBracket,
 			Equals
 		}
 
@@ -55,7 +55,7 @@ namespace SyntacticAnalysis
 						} else if (currentChar == '(') {
 							token.TypeOfToken = TypeOfToken.LeftBracket;
 						} else if (currentChar == ')') {
-							token.TypeOfToken = TypeOfToken.RightBracker;
+							token.TypeOfToken = TypeOfToken.RightBracket;
 						} else {
 							token.TypeOfToken = TypeOfToken.BinaryOperator;
 						}

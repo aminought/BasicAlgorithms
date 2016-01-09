@@ -12,27 +12,43 @@ namespace SyntacticAnalysis
 
 		public List<Node> Operands { get; set; }
 
+		int PossibleCount = 0;
+
 		public Node (Token token)
 		{
 			Token = token;
-			if (token.TypeOfToken == TypeOfToken.BinaryOperator
-			    || token.TypeOfToken == TypeOfToken.UnaryLeftOperator
-			    || token.TypeOfToken == TypeOfToken.UnaryRightOperator
-			    || token.TypeOfToken == TypeOfToken.Equals) {
+			if (Token.TypeOfToken == TypeOfToken.BinaryOperator) {
+				PossibleCount = 2;
+			} else if (Token.TypeOfToken == TypeOfToken.UnaryLeftOperator
+			           || Token.TypeOfToken == TypeOfToken.UnaryRightOperator
+			           || token.TypeOfToken == TypeOfToken.Equals) {
+				PossibleCount = 1;
+			}
+			if (PossibleCount > 0) {
 				Operands = new List<Node> ();
 			}
 		}
 
-		public void AddChild (Node child)
+		public bool AddChild (Node child)
 		{
-			child.Parent = this;
-			Operands.Add (child);
+			if (Operands.Count < PossibleCount) {
+				child.Parent = this;
+				Operands.Add (child);
+				return true;
+			} else {
+				return false;
+			}
 		}
 
-		public void RemoveChild (Node child)
+		public bool RemoveChild (Node child)
 		{
-			child.Parent = null;
-			Operands.Remove (child);
+			if (Operands.Count > 0) {
+				child.Parent = null;
+				Operands.Remove (child);
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 

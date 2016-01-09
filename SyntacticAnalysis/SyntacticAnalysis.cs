@@ -53,7 +53,7 @@ namespace SyntacticAnalysis
 							stack.Pop ();
 						} 
 						if (stack.Count == 0) {
-							newTokens.Add (new Token () { TypeOfToken = TypeOfToken.RightBracker, Value = ")" });
+							newTokens.Add (new Token () { TypeOfToken = TypeOfToken.RightBracket, Value = ")" });
 							break;
 						}
 						i++;
@@ -86,12 +86,16 @@ namespace SyntacticAnalysis
 					secondNode = GetNode (tokens, firstNode, ref countOfTokensProcessed, secondToken);
 					firstNode.AddChild (secondNode);
 					parent.AddChild (firstNode);
-				} else if (secondNode.Token.TypeOfToken == TypeOfToken.UnaryRightOperator) {
-					secondNode = GetNode (tokens, firstNode, ref countOfTokensProcessed, secondToken);
+				} else if (firstNode.Token.TypeOfToken == TypeOfToken.BinaryOperator) {
+					secondNode = GetNode (tokens, parent, ref countOfTokensProcessed, secondToken);
 					secondNode.AddChild (firstNode);
 					parent.AddChild (secondNode);
 				}
-				if (secondNode.Token.TypeOfToken == TypeOfToken.BinaryOperator) {
+				if (secondNode.Token.TypeOfToken == TypeOfToken.UnaryRightOperator) {
+					secondNode = GetNode (tokens, firstNode, ref countOfTokensProcessed, secondToken);
+					secondNode.AddChild (firstNode);
+					parent.AddChild (secondNode);
+				} else if (secondNode.Token.TypeOfToken == TypeOfToken.BinaryOperator) {
 					var thirdToken = tokens [countOfTokensProcessed++];
 					thirdNode = GetNode (tokens, secondNode, ref countOfTokensProcessed, thirdToken);
 					secondNode.AddChild (thirdNode);

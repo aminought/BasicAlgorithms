@@ -28,7 +28,7 @@ namespace NeuroNetwork
 				int[,] input = picture.ToInput ();
 				var neuroProb = neuroNetwork.Recognize (input);
 
-				if (i < 200) { // Auto learning
+				if (i < 2000) { // Auto learning
 					bool isTrue = name.Equals (neuroProb.Key.Name);
 					neuroProb.Key.Learn (isTrue, input);
 				} else { // Manual learning
