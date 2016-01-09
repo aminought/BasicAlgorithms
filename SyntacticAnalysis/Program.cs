@@ -13,7 +13,9 @@ namespace SyntacticAnalysis
 				"1+2+3",
 				"2*3",
 				"1+2*3",
-				"(1+2)*3"
+				"(1+2)*3",
+				"1+(2*3)",
+				"(1+2)*(3+4)/5",
 			};
 			expressions.ForEach (expression => {
 				var syntaxTree = syntacticAnalysis.Analyze (expression);

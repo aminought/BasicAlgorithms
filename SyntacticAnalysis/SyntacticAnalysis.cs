@@ -79,6 +79,7 @@ namespace SyntacticAnalysis
 				var secondToken = tokens [countOfTokensProcessed++];
 				Node secondNode = null;
 				Node thirdNode = null;
+
 				if (firstNode.Token.TypeOfToken == TypeOfToken.Operand) {
 					secondNode = GetNode (tokens, firstNode, ref countOfTokensProcessed, secondToken);
 					secondNode.AddChild (firstNode);
@@ -89,8 +90,10 @@ namespace SyntacticAnalysis
 				} else if (firstNode.Token.TypeOfToken == TypeOfToken.BinaryOperator) {
 					secondNode = GetNode (tokens, parent, ref countOfTokensProcessed, secondToken);
 					secondNode.AddChild (firstNode);
+					parent.RemoveLastChild ();
 					parent.AddChild (secondNode);
 				}
+
 				if (secondNode.Token.TypeOfToken == TypeOfToken.UnaryRightOperator) {
 					secondNode = GetNode (tokens, firstNode, ref countOfTokensProcessed, secondToken);
 					secondNode.AddChild (firstNode);

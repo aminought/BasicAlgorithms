@@ -35,9 +35,8 @@ namespace SyntacticAnalysis
 				child.Parent = this;
 				Operands.Add (child);
 				return true;
-			} else {
-				return false;
 			}
+			return false;
 		}
 
 		public bool RemoveChild (Node child)
@@ -46,9 +45,17 @@ namespace SyntacticAnalysis
 				child.Parent = null;
 				Operands.Remove (child);
 				return true;
-			} else {
-				return false;
 			}
+			return false;
+		}
+
+		public bool RemoveLastChild ()
+		{
+			if (Operands.Count > 0) {
+				Operands.RemoveAt (Operands.Count - 1);
+				return true;
+			}
+			return false;
 		}
 	}
 
